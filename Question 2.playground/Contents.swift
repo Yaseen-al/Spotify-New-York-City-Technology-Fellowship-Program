@@ -35,9 +35,14 @@ class Examples: XCTestCase {
         let testCaseTwo = (s: "2[b3[a]]", answer: "baaabaaa")
         let testResult = decodeString(s: testCaseTwo.s)
         XCTAssertEqual(testResult, testCaseTwo.answer, "\(testResult) is no equal to \(testCaseTwo.answer)")    }
+    static public func testExampleThree(){
+        let testCaseTwo = (s: "2[yaa3[ss]]", answer: "yaassssssyaassssss")
+        let testResult = decodeString(s: testCaseTwo.s)
+        XCTAssertEqual(testResult, testCaseTwo.answer, "\(testResult) is no equal to \(testCaseTwo.answer)")    }
 }
 
 Examples.testExampleTwo()
 Examples.testExampleOne()
+Examples.testExampleThree()
 
 
