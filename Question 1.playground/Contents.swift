@@ -31,5 +31,6 @@ class Examples: XCTestCase {
         XCTAssertEqual(testResult, testCaseTwo.answer, "\(testResult) is no equal to \(testCaseTwo.answer)")    }
 }
 Examples.testExampleOne()
+Examples.testExampleTwo()
 
 
