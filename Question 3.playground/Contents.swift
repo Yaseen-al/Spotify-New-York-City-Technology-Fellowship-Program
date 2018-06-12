@@ -15,7 +15,7 @@ import XCTest
  2¢, 2¢
  */
 
-func changePossibilities(_ amount: Int,_ dominations: [Int]){
+func changePossibilities(_ amount: Int,_ dominations: [Int])->[[Int]]{
     var possibilities = [Int]()
     var answers = [[Int]]()
     for domination in dominations where domination <= amount{
@@ -25,26 +25,29 @@ func changePossibilities(_ amount: Int,_ dominations: [Int]){
                 possibilities.append(domination)
                 myAmount -= domination
             }
-            print(possibilities)
+            answers.append(possibilities)
             possibilities.removeAll()
         }
         if amount - domination < 0 {
             continue
         }
-        else if  amount - domination == 0 {
-            print(domination)
-        }
+//        else if  amount - domination == 0 {
+//
+//            print(domination)
+//        }
         else{
             possibilities.append(domination)
             possibilities.append(contentsOf: changePossibilitiesHelper(amount-domination, dominations))
             guard !possibilities.isEmpty else {
                 continue
             }
-            answers.append(possibilities)
-            print(possibilities)
+            answers.append(possibilities.sorted())
             possibilities.removeAll()
         }
     }
+    answers = answers.sorted(by: {$0.count > $1.count})
+    print(answers)
+    return answers
 }
 
 /*
@@ -73,7 +76,20 @@ func changePossibilitiesHelper(_ amount: Int,_ dominations: [Int])->[Int]{
     return possibilities
 }
 //changePossibilitiesHelper(5, [10,3,2,1])
-changePossibilities(4, [1,2,3])
+changePossibilities(4, [1,2,3,4,7])
+
+class Examples: XCTestCase {
+    func testCaseOne(){
+        let testCaseOne = (amount: 4, answer: [[1, 1, 1, 1],
+                                               [1, 1, 2],
+                                               [2, 2],
+                                               [2, 1, 1],
+                                               [3, 1]]
+)
+//        let testResult =
+//        XCTAssertEqual(testResult, testCaseOne.answer, "\(testResult) is no equal to \(testCaseOne.answer)")
+    }
 
 
+}
 
