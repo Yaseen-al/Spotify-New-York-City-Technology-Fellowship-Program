@@ -18,7 +18,7 @@ import XCTest
 func changePossibilities(_ amount: Int,_ dominations: [Int])->[[Int]]{
     var possibilities = [Int]()
     var answers = [[Int]]()
-
+    
     for domination in dominations where domination <= amount{
         if amount % domination == 0 {
             var myAmount = amount
@@ -29,19 +29,14 @@ func changePossibilities(_ amount: Int,_ dominations: [Int])->[[Int]]{
             answers.append(possibilities)
             possibilities.removeAll()
         }
-        if amount - domination < 0 {
+        possibilities.append(domination)
+        possibilities.append(contentsOf: changePossibilitiesHelper(amount-domination, dominations))
+        guard !possibilities.isEmpty else {
             continue
         }
-
-        else{
-            possibilities.append(domination)
-            possibilities.append(contentsOf: changePossibilitiesHelper(amount-domination, dominations))
-            guard !possibilities.isEmpty else {
-                continue
-            }
-            answers.append(possibilities.sorted())
-            possibilities.removeAll()
-        }
+        answers.append(possibilities.sorted())
+        possibilities.removeAll()
+        
     }
     answers = answers.sorted(by: {$0.count > $1.count})
     answers.forEach { (possibilities) in
