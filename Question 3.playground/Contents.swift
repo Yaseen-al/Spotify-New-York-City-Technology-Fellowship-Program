@@ -19,6 +19,15 @@ func changePossibilities(_ amount: Int,_ dominations: [Int]){
     var possibilities = [Int]()
     var answers = [[Int]]()
     for domination in dominations where domination <= amount{
+        if amount % domination == 0 {
+            var myAmount = amount
+            while myAmount != 0 {
+                possibilities.append(domination)
+                myAmount -= domination
+            }
+            print(possibilities)
+            possibilities.removeAll()
+        }
         if amount - domination < 0 {
             continue
         }
@@ -46,23 +55,25 @@ func changePossibilitiesHelper(_ amount: Int,_ dominations: [Int])->[Int]{
         return []
     }
     var possibilities = [Int]()
-    for domination in dominations {
-        if amount - domination > 0 {
-            possibilities.append(domination)
-            return changePossibilitiesHelper(amount-domination, dominations) + possibilities
+    for i in 0..<dominations.count {
+        if i+1 < dominations.count {
+            if amount - dominations[i+1] > 0{
+                continue
+            }
         }
-        if amount - domination == 0 {
-            possibilities.append(domination)
+        if amount - dominations[i] > 0 {
+            possibilities.append(dominations[i])
+            return changePossibilitiesHelper(amount-dominations[i], dominations) + possibilities
+        }
+        if amount - dominations[i] == 0 {
+            possibilities.append(dominations[i])
             return possibilities
         }
     }
     return possibilities
 }
 //changePossibilitiesHelper(5, [10,3,2,1])
-changePossibilities(5, [1,2,3])
+changePossibilities(4, [1,2,3])
 
-class Examples: XCTest{
-    func testOne(){
-    }
-}
+
 
