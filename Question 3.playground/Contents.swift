@@ -18,6 +18,7 @@ import XCTest
 func changePossibilities(_ amount: Int,_ dominations: [Int])->[[Int]]{
     var possibilities = [Int]()
     var answers = [[Int]]()
+
     for domination in dominations where domination <= amount{
         if amount % domination == 0 {
             var myAmount = amount
@@ -31,10 +32,7 @@ func changePossibilities(_ amount: Int,_ dominations: [Int])->[[Int]]{
         if amount - domination < 0 {
             continue
         }
-//        else if  amount - domination == 0 {
-//
-//            print(domination)
-//        }
+
         else{
             possibilities.append(domination)
             possibilities.append(contentsOf: changePossibilitiesHelper(amount-domination, dominations))
@@ -46,10 +44,11 @@ func changePossibilities(_ amount: Int,_ dominations: [Int])->[[Int]]{
         }
     }
     answers = answers.sorted(by: {$0.count > $1.count})
-    print(answers)
+    answers.forEach { (possibilities) in
+        print(possibilities)
+    }
     return answers
 }
-
 /*
  The helper function finds the possible compination for a decrementing amount used by the parent function
  */
@@ -75,21 +74,6 @@ func changePossibilitiesHelper(_ amount: Int,_ dominations: [Int])->[Int]{
     }
     return possibilities
 }
-//changePossibilitiesHelper(5, [10,3,2,1])
+
 changePossibilities(4, [1,2,3,4,7])
-
-class Examples: XCTestCase {
-    func testCaseOne(){
-        let testCaseOne = (amount: 4, answer: [[1, 1, 1, 1],
-                                               [1, 1, 2],
-                                               [2, 2],
-                                               [2, 1, 1],
-                                               [3, 1]]
-)
-//        let testResult =
-//        XCTAssertEqual(testResult, testCaseOne.answer, "\(testResult) is no equal to \(testCaseOne.answer)")
-    }
-
-
-}
 
