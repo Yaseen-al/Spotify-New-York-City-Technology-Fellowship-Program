@@ -14,11 +14,24 @@ import XCTest
  1¢, 3¢
  2¢, 2¢
  */
+/*
+ To get only the number of times
+ */
+func changePossibilities(_ amount: Int,_ dominations: [Int])->Int{
+    return changePossibilitiesHelper(amount, dominations, index: dominations.count - 1)
+}
+func changePossibilitiesHelper(_ amount: Int,_ dominations: [Int], index: Int)->Int{
+    guard index >= 0, amount >= 0 else {return 0}
+    if amount == 0{return 1}
+    return changePossibilitiesHelper(amount-dominations[index], dominations, index: index) + changePossibilitiesHelper(amount, dominations, index: index - 1)
+}
 
-func changePossibilities(_ amount: Int,_ dominations: [Int])->[[Int]]{
+changePossibilities(4, [1,2,3])
+
+
+func changePossibilitiesCombination(_ amount: Int,_ dominations: [Int])->[[Int]]{
     var possibilities = [Int]()
     var answers = [[Int]]()
-    
     for domination in dominations where domination <= amount{
         if amount % domination == 0 {
             var myAmount = amount
@@ -30,7 +43,7 @@ func changePossibilities(_ amount: Int,_ dominations: [Int])->[[Int]]{
             possibilities.removeAll()
         }
         possibilities.append(domination)
-        possibilities.append(contentsOf: changePossibilitiesHelper(amount-domination, dominations))
+        possibilities.append(contentsOf: changePossibilitiesCombinationHelper(amount-domination, dominations))
         guard !possibilities.isEmpty else {
             continue
         }
@@ -47,7 +60,7 @@ func changePossibilities(_ amount: Int,_ dominations: [Int])->[[Int]]{
 /*
  The helper function finds the possible compination for a decrementing amount used by the parent function
  */
-func changePossibilitiesHelper(_ amount: Int,_ dominations: [Int])->[Int]{
+func changePossibilitiesCombinationHelper(_ amount: Int,_ dominations: [Int])->[Int]{
     guard amount >= 0 else {
         return []
     }
@@ -60,7 +73,7 @@ func changePossibilitiesHelper(_ amount: Int,_ dominations: [Int])->[Int]{
         }
         if amount - dominations[i] > 0 {
             possibilities.append(dominations[i])
-            return changePossibilitiesHelper(amount-dominations[i], dominations) + possibilities
+            return changePossibilitiesCombinationHelper(amount-dominations[i], dominations) + possibilities
         }
         if amount - dominations[i] == 0 {
             possibilities.append(dominations[i])
@@ -70,5 +83,6 @@ func changePossibilitiesHelper(_ amount: Int,_ dominations: [Int])->[Int]{
     return possibilities
 }
 
-changePossibilities(4, [1,2,3,4,7])
+changePossibilitiesCombination(4, [1,2,3,4,7])
+
 
