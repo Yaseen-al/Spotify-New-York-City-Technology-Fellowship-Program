@@ -23,10 +23,16 @@ func changePossibilities(_ amount: Int,_ dominations: [Int])->Int{
 func changePossibilitiesHelper(_ amount: Int,_ dominations: [Int], index: Int)->Int{
     guard index >= 0, amount >= 0 else {return 0}
     if amount == 0{return 1}
+    if amount - dominations[index] == 1 {
+        return 1 + changePossibilitiesHelper(amount, dominations, index: index - 1)
+    }else if amount - dominations[index] < 0 {
+        return changePossibilitiesHelper(amount, dominations, index: index - 1)
+    }else{
     return changePossibilitiesHelper(amount-dominations[index], dominations, index: index) + changePossibilitiesHelper(amount, dominations, index: index - 1)
+    }
 }
 
-changePossibilities(4, [1,2,3])
+changePossibilities(20, [1,2,3])
 
 
 func changePossibilitiesCombination(_ amount: Int,_ dominations: [Int])->[[Int]]{
