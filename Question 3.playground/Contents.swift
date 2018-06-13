@@ -32,8 +32,16 @@ func changePossibilitiesHelper(_ amount: Int,_ dominations: [Int], index: Int)->
     }
 }
 
-changePossibilities(20, [1,2,3])
 
+
+class Solution: XCTest {
+    static public func testCaseOne(){
+        let testCaseOne = (amount: 4,dominations: [1,2,3], answer: 4 )
+        let testingAnswer = changePossibilities(testCaseOne.amount, testCaseOne.dominations)
+        XCTAssertEqual(testingAnswer, testCaseOne.answer, "Your testing answer \(testingAnswer) is not equal to \(testCaseOne.answer)")
+    }
+}
+Solution.testCaseOne()
 
 func changePossibilitiesCombination(_ amount: Int,_ dominations: [Int])->[[Int]]{
     var possibilities = [Int]()
@@ -63,6 +71,7 @@ func changePossibilitiesCombination(_ amount: Int,_ dominations: [Int])->[[Int]]
     }
     return answers
 }
+
 /*
  The helper function finds the possible compination for a decrementing amount used by the parent function
  */
